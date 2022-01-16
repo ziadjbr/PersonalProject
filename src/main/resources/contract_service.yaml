@@ -1,0 +1,103 @@
+openapi: 3.0.0
+info:
+  title: Contacts
+  version: '1.0'
+servers:
+  - url: 'http://localhost:9032'
+paths:
+  '/contacts/{contact_id}':
+    parameters:
+      - schema:
+          type: integer
+        name: contact_id
+        in: path
+        required: true
+    get:
+      summary: get contact by contact_ID
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/contact'
+        '404':
+          description : Not Found
+      operationId: delete-contacts-contact_id
+      description: Delete a specific contact by ID
+    delete:
+      summary: Delete contact by contact ID
+      tags: []
+      responses:
+        '200':
+          description: Success
+        '404':
+          description : Not Found
+      operationId: get-contacts-contact_id
+      description: Retrieve a specific contact by ID
+    put:
+      summary: Modify an existing contact
+      operationId: put-contacts
+      responses:
+        '500':
+          description: Internal server error
+        '400':
+          description: Bad request
+        '200':
+          description: Success
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/contact'
+  /contacts:
+    get:
+      summary: get all contacts
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                 contacts:
+                    type: array
+                    items:
+                     $ref: '#/components/schemas/contact'
+        '404':
+          description: Not Found
+      operationId: get-contacts
+      description: Retrieve all contacts
+    post:
+      summary: Add a new contact
+      operationId: post-contacts
+      responses:
+        '500':
+          description: Internal server error
+        '400':
+          description: Bad request      
+        '201':
+          description: Created
+      requestBody:
+        content:
+          application/json:
+              schema:
+                $ref: '#/components/schemas/contact'
+                  
+
+components:
+  schemas:
+    contact:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
